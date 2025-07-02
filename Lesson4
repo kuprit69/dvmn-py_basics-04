@@ -2,19 +2,22 @@ from PIL import Image
 
 image = Image.open("monro.jpg").convert("RGB")
 width, height = image.size
+
 shift = 20
 final_width = 595
 final_height = 522
 
 r, g, b = image.split()
 
-r = r.crop((shift, 0, width, height))
-g = g.crop((0, 0, width - shift, height))
-b = b.crop((0, 0, width - shift, height))
+r1 = r.crop((shift, 0, width, height))
+r2 = r.crop((0, 0, width-shift, height))
+r = Image.blend(r1, r2, 0.5)
 
-r = r.resize((width - shift, height))
-g = g.resize((width - shift, height))
-b = b.resize((width - shift, height))
+g = g.crop((0, 0, width-shift, height))
+
+b1 = b.crop((0, 0, width-shift, height))
+b2 = b.crop((shift, 0, width, height))
+b = Image.blend(b1, b2, 0.5)
 
 glitched = Image.merge("RGB", (r, g, b))
 glitched.save("monro_glitch.jpg")
