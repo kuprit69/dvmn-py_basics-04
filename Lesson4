@@ -10,22 +10,13 @@ crop_left_r = r_channel.crop((value, 0, width, height))
 crop_offset_r = r_channel.crop((half_value, 0, width - half_value, height))
 blended_r = Image.blend(crop_left_r, crop_offset_r, 0.5)
 
-crop_right_b = b_channel.crop((value, 0, width, height))
-crop_offset_b = b_channel.crop((half_value, 0, width - half_value, height))
+crop_right_b = b_channel.crop((0, 0, width - value, height))
+crop_offset_b = b_channel.crop((0, 0, width - half_value, height))
 blended_b = Image.blend(crop_right_b, crop_offset_b, 0.5)
 
 crop_g = g_channel.crop((half_value, 0, width - half_value, height))
 
-full_r = r_channel.copy()
-full_r.paste(blended_r, (0, 0))
-
-full_g = g_channel.copy()
-full_g.paste(crop_g,     (half_value, 0))
-
-full_b = b_channel.copy()
-full_b.paste(blended_b, (width - value, 0))
-
-result = Image.merge("RGB", (full_r, full_g, full_b))
+result = Image.merge("RGB", (blended_r, crop_g, blended_b))
 
 result.save("monro_glitch.jpg")
 
