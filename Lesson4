@@ -1,3 +1,5 @@
+import this
+
 from PIL import Image
 
 image = Image.open("monro.jpg").convert("RGB")
@@ -11,7 +13,7 @@ crop_offset_r = r_channel.crop((half_value, 0, width - half_value, height))
 blended_r = Image.blend(crop_left_r, crop_offset_r, 0.5)
 
 crop_right_b = b_channel.crop((0, 0, width - value, height))
-crop_offset_b = b_channel.crop((0, 0, width - half_value, height))
+crop_offset_b = b_channel.crop((half_value, 0, width - half_value, height))
 blended_b = Image.blend(crop_right_b, crop_offset_b, 0.5)
 
 crop_g = g_channel.crop((half_value, 0, width - half_value, height))
